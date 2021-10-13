@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class LiveTask extends AppCompatActivity {
+public class LiveTaskActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     List<TaskItem> taskItemList = new ArrayList<>();

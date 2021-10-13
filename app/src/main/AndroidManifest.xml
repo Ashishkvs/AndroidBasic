@@ -14,7 +14,7 @@
         android:theme="@style/Theme.AndroidBasic"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".LiveTask"
+            android:name=".LiveTaskActivity"
             android:exported="true"
             android:label="@string/title_activity_live_task"
             android:theme="@style/Theme.AndroidBasic.NoActionBar">
