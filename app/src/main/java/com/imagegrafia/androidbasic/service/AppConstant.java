@@ -1,4 +1,4 @@
-package com.imagegrafia.androidbasic;
+package com.imagegrafia.androidbasic.service;
 
 public class AppConstant {
 

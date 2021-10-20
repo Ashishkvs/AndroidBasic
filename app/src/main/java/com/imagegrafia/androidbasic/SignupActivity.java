@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.imagegrafia.androidbasic.api.LoginApiService;
 import com.imagegrafia.androidbasic.api.User;
 import com.imagegrafia.androidbasic.service.AppConstant;
+import com.imagegrafia.androidbasic.service.AuthService;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -23,27 +24,29 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
 
-    TextView txtViewErrMessage;
+    TextView txtViewSignupErrMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_signup);
 
-        EditText editTextEmailAddress = findViewById(R.id.editTextEmailAddress);
-        EditText editTextPassword = findViewById(R.id.editTextPassword);
-        txtViewErrMessage = findViewById(R.id.txtViewErrMessage);
-        findViewById(R.id.imageView3);
-        Button btnSignIn = findViewById(R.id.btnSignIn);
-        btnSignIn.setOnClickListener(v -> signInUser(editTextEmailAddress.getText().toString(), editTextPassword.getText().toString()));
+        EditText editTextSignupUsername = findViewById(R.id.editTextSignupUsername);
+        EditText editTextSignupEmail = findViewById(R.id.editTextSignupEmail);
+        EditText editTextSignupPassword = findViewById(R.id.editTextSignupPassword);
+        txtViewSignupErrMessage = findViewById(R.id.txtViewSignupErrMessage);
+        findViewById(R.id.imageViewSignUp);
+        Button btnSignup = findViewById(R.id.btnSignup);
+        btnSignup.setOnClickListener(v -> signupUser(editTextSignupUsername.getText().toString(),
+                editTextSignupEmail.getText().toString(), editTextSignupPassword.getText().toString()));
 
     }
 
-    private void signInUser(String email, String password) {
+    private void signupUser(String name, String email, String password) {
         Log.i(TAG, email + ":" + password);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(AppConstant.BASE_URL)
@@ -53,28 +56,26 @@ public class SignInActivity extends AppCompatActivity {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
-        Call<Object> call = loginApiService.userLogin(user);
+        user.setName(name);
+        Call<Object> call = loginApiService.userSignup(user);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.i(TAG, response.toString());
-                if (response.code() == 200) {
-                    Toast.makeText(SignInActivity.this, "Logged In Successfully" + response.body(), Toast.LENGTH_SHORT).show();
-                    // Load Live Task Activity
-                    Intent liveTaskActivityIntent = new Intent(SignInActivity.this, LiveTaskActivity.class);
-                    String auth = "Basic " + Base64.getEncoder().encodeToString((email + ":" + password).getBytes(StandardCharsets.UTF_8));
-                    liveTaskActivityIntent.putExtra(AppConstant.AUTHORIZATION, auth);
-                    startActivity(liveTaskActivityIntent);
+                if (response.code() == 201) {
+                    Toast.makeText(SignupActivity.this, "SignUp In Successfully" + response.body(), Toast.LENGTH_SHORT).show();
+                    // Load Verification Activity
+                    new AuthService().callCustomIntent(user,SignupActivity.this, VerificationActivity.class);
                 } else {
                     Log.e(TAG, response.toString());
-                    SignInActivity.this.txtViewErrMessage.setText("Invalid Login Details");
-                    Toast.makeText(SignInActivity.this, "Logged In Failed", Toast.LENGTH_LONG).show();
+                    SignupActivity.this.txtViewSignupErrMessage.setText("Invalid signup details");
+                    Toast.makeText(SignupActivity.this, "Signup Failed", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-                Toast.makeText(SignInActivity.this, "Failed fetching record", Toast.LENGTH_LONG).show();
+                Toast.makeText(SignupActivity.this, "Failed fetching record", Toast.LENGTH_LONG).show();
             }
         });
     }

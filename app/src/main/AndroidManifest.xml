@@ -14,7 +14,13 @@
         android:theme="@style/Theme.AndroidBasic"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".VerificationActivity"
+            android:exported="true" />
+        <activity
             android:name=".SignInActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SignupActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +32,7 @@
             android:name=".LiveTaskActivity"
             android:exported="true"
             android:label="@string/title_activity_live_task"
-            android:theme="@style/Theme.AndroidBasic.NoActionBar">
-        </activity> <!-- <activity -->
+            android:theme="@style/Theme.AndroidBasic.NoActionBar" /> <!-- <activity -->
         <!-- android:name=".TestingRestApi" -->
         <!-- android:exported="true" /> -->
         <activity

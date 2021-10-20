@@ -18,6 +18,7 @@ public interface LoginApiService {
     @POST("user/signup")
     Call<Object> userSignup(@Body User user);
 
-//    @GET("order/temp/{orderNumber}")
-//    Call<List<TaskItem>> getOderItem(@Header("Authorization") String authorization, @Path("orderNumber") Integer orderNumber);
+    @GET("user/accountVerification/{token}")
+    Call<Object> userTokenVerification(@Path("token") String token);
+
 }
