@@ -1,5 +1,6 @@
 package com.imagegrafia.androidbasic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,8 +21,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LiveTaskActivity extends AppCompatActivity {
 
+public class LiveTaskActivity extends AppCompatActivity {
+    private final String TAG = this.getClass().getName();
     RecyclerView recyclerView;
 //    List<TaskItem> taskItemList = new ArrayList<>();
     //smart way
@@ -33,28 +35,36 @@ public class LiveTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_live_task);
 
         recyclerView = findViewById(R.id.liveTaskRecyclerView);
-
-        fetchLiveTask();
+        Intent intent = getIntent();
+        String authorization = intent.getStringExtra(AppConstant.AUTHORIZATION);
+        fetchLiveTask(authorization);
     }
 
-    private void fetchLiveTask() {
+    private void fetchLiveTask(String authorization) {
+        Log.i(TAG,"authorization : "+ authorization);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:7777")
+                .baseUrl(AppConstant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         DeliveryApiService dashDeliveryApiService = retrofit.create(DeliveryApiService.class);
-        String authorization = "Basic YXNoaXNoa3ZzQGdtYWlsLmNvbTowMDlpbnNwaXJlZA==";
+//        String authorization = "Basic YXNoaXNoa3ZzQGdtYWlsLmNvbTowMDlpbnNwaXJlZA==";
         Call<List<TaskItem>> call = dashDeliveryApiService.getOderItem(authorization, 4);
         call.enqueue(new Callback<List<TaskItem>>() {
             @Override
             public void onResponse(Call<List<TaskItem>> call, Response<List<TaskItem>> response) {
-                setDataIntoRecyclerView(response.body());
-                Toast.makeText(LiveTaskActivity.this, "Success fetching record", Toast.LENGTH_LONG).show();
+                Log.i(TAG, response.toString());
+                if (response.code() == 200) {
+                    setDataIntoRecyclerView(response.body());
+                    Toast.makeText(LiveTaskActivity.this, "Success fetching record", Toast.LENGTH_SHORT).show();
+                }else {
+                    Log.e(TAG, response.toString());
+                    Toast.makeText(LiveTaskActivity.this, "fetching record Failed", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onFailure(Call<List<TaskItem>> call, Throwable t) {
-                Toast.makeText(LiveTaskActivity.this, "Failed fetching record", Toast.LENGTH_LONG).show();
+                Toast.makeText(LiveTaskActivity.this, "Failed while making api call record", Toast.LENGTH_LONG).show();
             }
         });
     }
