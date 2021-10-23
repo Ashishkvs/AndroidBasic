@@ -1,6 +1,7 @@
 package com.imagegrafia.androidbasic.search;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.imagegrafia.androidbasic.AppConstant;
+import com.imagegrafia.androidbasic.ItemDetailActivity;
 import com.imagegrafia.androidbasic.R;
 
 import java.util.List;
@@ -35,10 +38,22 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchItem
 
     @Override
     public void onBindViewHolder(@NonNull SearchItemViewHolder holder, int position) {
+        final SearchItem searchItem = searchItemList.get(position);
+
         holder.description.setText(searchItemList.get(position).getDescription());
         holder.title.setText(searchItemList.get(position).getTitle());
         //Adding glide library to display images
         Glide.with(mContext).load(searchItemList.get(position).getImageUrl()).into(holder.imageView);
+        //view item Detail page on click
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent itemDetailIntent = new Intent(mContext, ItemDetailActivity.class);
+                itemDetailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                itemDetailIntent.putExtra(AppConstant.SEARCH_ITEM_DETAIL, searchItem);
+                mContext.startActivity(itemDetailIntent);
+            }
+        });
     }
 
     @Override

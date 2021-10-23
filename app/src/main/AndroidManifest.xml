@@ -14,12 +14,15 @@
         android:theme="@style/Theme.AndroidBasic"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ItemDetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".SignInActivity"
             android:exported="true" />
         <activity
             android:name=".SearchActivity"
-            android:label="Search Food Item"
-            android:exported="true">
+            android:exported="true"
+            android:label="Search Food Item">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +33,7 @@
             android:name=".LiveTaskActivity"
             android:exported="true"
             android:label="@string/title_activity_live_task"
-            android:theme="@style/Theme.AndroidBasic.NoActionBar"></activity> <!-- <activity -->
+            android:theme="@style/Theme.AndroidBasic.NoActionBar" /> <!-- <activity -->
         <!-- android:name=".TestingRestApi" -->
         <!-- android:exported="true" /> -->
         <activity
