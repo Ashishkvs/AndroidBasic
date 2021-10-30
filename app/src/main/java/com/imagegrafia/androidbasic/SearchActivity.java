@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.imagegrafia.androidbasic.api.SearchApiService;
+import com.imagegrafia.androidbasic.api.ApiServiceConfig;
 import com.imagegrafia.androidbasic.search.SearchAdapter;
 import com.imagegrafia.androidbasic.search.SearchItem;
 
@@ -22,7 +23,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchActivity extends AppCompatActivity {
     private final String TAG = this.getClass().getName();
@@ -63,10 +63,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void searchText(String searchText) {
         Log.i(TAG, "searchText : " + searchText);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AppConstant.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = ApiServiceConfig.retroFitBuilder();
         SearchApiService searchApiService = retrofit.create(SearchApiService.class);
         //TODO remove auth from search
         String auth = "Basic YXNoaXNoa3ZzQGdtYWlsLmNvbTowMDlpbnNwaXJlZA==";

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.imagegrafia.androidbasic.adapter.TaskAdapter;
 import com.imagegrafia.androidbasic.adapter.TaskItem;
 import com.imagegrafia.androidbasic.api.DeliveryApiService;
+import com.imagegrafia.androidbasic.api.ApiServiceConfig;
 
 import java.util.List;
 
@@ -19,7 +20,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class LiveTaskActivity extends AppCompatActivity {
@@ -42,10 +42,11 @@ public class LiveTaskActivity extends AppCompatActivity {
 
     private void fetchLiveTask(String authorization) {
         Log.i(TAG,"authorization : "+ authorization);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AppConstant.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(AppConstant.BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+        Retrofit retrofit = ApiServiceConfig.retroFitBuilder();
         DeliveryApiService dashDeliveryApiService = retrofit.create(DeliveryApiService.class);
 //        String authorization = "Basic YXNoaXNoa3ZzQGdtYWlsLmNvbTowMDlpbnNwaXJlZA==";
         Call<List<TaskItem>> call = dashDeliveryApiService.getOderItem(authorization, 4);

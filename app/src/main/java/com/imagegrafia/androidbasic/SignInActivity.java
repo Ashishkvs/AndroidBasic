@@ -11,9 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.imagegrafia.androidbasic.api.LoginApiService;
+import com.imagegrafia.androidbasic.api.ApiServiceConfig;
 import com.imagegrafia.androidbasic.api.User;
-
-import org.w3c.dom.Text;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -22,7 +21,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -46,10 +44,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void signInUser(String email, String password) {
         Log.i(TAG, email + ":" + password);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AppConstant.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Retrofit retrofit = ApiServiceConfig.retroFitBuilder();
         LoginApiService loginApiService = retrofit.create(LoginApiService.class);
         User user = new User();
         user.setEmail(email);
