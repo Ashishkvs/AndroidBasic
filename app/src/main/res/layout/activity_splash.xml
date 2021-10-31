@@ -4,6 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".SplashActivity">
 
+    <ImageView
+        android:id="@+id/iv_logo_splash"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="196dp"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/ic_baseline_category_24"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/logo_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/omsent"
+        android:textColor="#191818"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo_splash" />
 </androidx.constraintlayout.widget.ConstraintLayout>

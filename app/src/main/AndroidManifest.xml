@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.imagegrafia.androidbasic">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,8 +13,9 @@
         android:theme="@style/Theme.AndroidBasic"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".SignInActivity"
-            android:exported="true">
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AndroidBasic.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,11 +23,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SignInActivity"
+            android:theme="@style/Theme.AndroidBasic.NoActionBar"
+            android:exported="false">
+
+        </activity>
+        <activity
             android:name=".LiveTaskActivity"
             android:exported="true"
             android:label="@string/title_activity_live_task"
-            android:theme="@style/Theme.AndroidBasic.NoActionBar">
-        </activity> <!-- <activity -->
+            android:theme="@style/Theme.AndroidBasic.NoActionBar"/> <!-- <activity -->
         <!-- android:name=".TestingRestApi" -->
         <!-- android:exported="true" /> -->
         <activity
