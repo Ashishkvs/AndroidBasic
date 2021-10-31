@@ -3,15 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/drawable/ic_baseline_category_24.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.1318607764390897" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout-w936dp/activity_login.xml" value="0.15390625" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout/activity_live_task.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout/activity_login.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout/activity_sign_in.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout/activity_signup.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout/activity_signup.xml" value="0.2328125" />
+        <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout/activity_splash.xml" value="0.2328125" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout/activity_testing_rest_api.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout/activity_verification.xml" value="0.4" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/AndroidBasic/app/src/main/res/layout/task_item.xml" value="0.4" />
       </map>
     </option>

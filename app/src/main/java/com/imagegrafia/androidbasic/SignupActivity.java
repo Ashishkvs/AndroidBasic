@@ -35,6 +35,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+
         EditText editTextSignupUsername = findViewById(R.id.editTextSignupUsername);
         EditText editTextSignupEmail = findViewById(R.id.editTextSignupEmail);
         EditText editTextSignupPassword = findViewById(R.id.editTextSignupPassword);
@@ -43,6 +44,13 @@ public class SignupActivity extends AppCompatActivity {
         Button btnSignup = findViewById(R.id.btnSignup);
         btnSignup.setOnClickListener(v -> signupUser(editTextSignupUsername.getText().toString(),
                 editTextSignupEmail.getText().toString(), editTextSignupPassword.getText().toString()));
+
+        Button btnLoginPage = findViewById(R.id.btnLoginPage);
+        btnLoginPage.setOnClickListener(v ->{
+            Intent signInIntent = new Intent(SignupActivity.this, SignInActivity.class);
+            startActivity(signInIntent);
+            finish();
+        });
 
     }
 

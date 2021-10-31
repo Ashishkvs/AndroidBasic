@@ -1,6 +1,8 @@
 package com.imagegrafia.androidbasic;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -29,6 +31,8 @@ public class SignInActivity extends AppCompatActivity {
 
     TextView txtViewErrMessage;
 
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,15 @@ public class SignInActivity extends AppCompatActivity {
         findViewById(R.id.imageView3);
         Button btnSignIn = findViewById(R.id.btnSignIn);
         btnSignIn.setOnClickListener(v -> signInUser(editTextEmailAddress.getText().toString(), editTextPassword.getText().toString()));
+        Button btnSignupPage = findViewById(R.id.btnSignupPage);
+        btnSignupPage.setOnClickListener(v -> {
+            Intent signInIntent = new Intent(SignInActivity.this, SignupActivity.class);
+            startActivity(signInIntent);
+            finish();
+        });
+
+        //shared pref
+        sharedPreferences = getSharedPreferences(AppConstant.CURRENT_USER, Context.MODE_PRIVATE);
 
     }
 
@@ -65,6 +78,12 @@ public class SignInActivity extends AppCompatActivity {
                     String auth = "Basic " + Base64.getEncoder().encodeToString((email + ":" + password).getBytes(StandardCharsets.UTF_8));
                     liveTaskActivityIntent.putExtra(AppConstant.AUTHORIZATION, auth);
                     startActivity(liveTaskActivityIntent);
+
+                    //shared pref
+                    SharedPreferences.Editor spEditor = sharedPreferences.edit();
+                    spEditor.putString(AppConstant.AUTHORIZATION, auth);
+                    spEditor.commit();
+
                 } else {
                     Log.e(TAG, response.toString());
                     SignInActivity.this.txtViewErrMessage.setText("Invalid Login Details");

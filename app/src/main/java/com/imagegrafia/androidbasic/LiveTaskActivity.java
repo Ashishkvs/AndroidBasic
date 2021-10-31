@@ -1,6 +1,8 @@
 package com.imagegrafia.androidbasic;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,6 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LiveTaskActivity extends AppCompatActivity {
     private final String TAG = this.getClass().getName();
     RecyclerView recyclerView;
+
+    SharedPreferences sharedPreferences;
 //    List<TaskItem> taskItemList = new ArrayList<>();
     //smart way
 //        Stream.iterate(1,i -> i+1 ).limit(10).forEach(data -> taskItemList.add(new TaskItem("Title"+data, data.toString(), "https://cdn.pixabay.com/photo/2020/09/19/19/37/landscape-5585247_960_720.jpg")));
@@ -39,10 +43,15 @@ public class LiveTaskActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String authorization = intent.getStringExtra(AppConstant.AUTHORIZATION);
         fetchLiveTask(authorization);
+
+        //fetch detail using sharedPreferences
+        sharedPreferences = getApplicationContext().getSharedPreferences(AppConstant.CURRENT_USER, Context.MODE_PRIVATE);
+        String auth = sharedPreferences.getString(AppConstant.AUTHORIZATION, "");
+        Toast.makeText(LiveTaskActivity.this, "Info fetched from SP"+auth, Toast.LENGTH_LONG).show();
     }
 
     private void fetchLiveTask(String authorization) {
-        Log.i(TAG,"authorization : "+ authorization);
+        Log.i(TAG, "authorization : " + authorization);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(AppConstant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -57,7 +66,7 @@ public class LiveTaskActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     setDataIntoRecyclerView(response.body());
                     Toast.makeText(LiveTaskActivity.this, "Success fetching record", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Log.e(TAG, response.toString());
                     Toast.makeText(LiveTaskActivity.this, "fetching record Failed", Toast.LENGTH_LONG).show();
                 }
