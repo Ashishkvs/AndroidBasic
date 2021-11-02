@@ -87,18 +87,18 @@ public class SignInActivity extends AppCompatActivity {
                     SharedPreferences.Editor spEditor = sharedPreferences.edit();
                     spEditor.putString(AppConstant.AUTHORIZATION, auth);
                     spEditor.commit();
-                    SignInActivity.this.loadingDialog.dismissProgressBar();
-
                 } else {
                     SignInActivity.this.loadingDialog.dismissProgressBar();
                     Log.e(TAG, response.toString());
                     SignInActivity.this.txtViewErrMessage.setText("Invalid Login Details");
                     Toast.makeText(SignInActivity.this, "Logged In Failed", Toast.LENGTH_LONG).show();
                 }
+                SignInActivity.this.loadingDialog.dismissProgressBar();
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
+                SignInActivity.this.loadingDialog.dismissProgressBar();
                 Toast.makeText(SignInActivity.this, "Failed fetching record", Toast.LENGTH_LONG).show();
             }
         });

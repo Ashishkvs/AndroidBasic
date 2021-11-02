@@ -14,6 +14,7 @@ import com.imagegrafia.androidbasic.api.LoginApiService;
 import com.imagegrafia.androidbasic.api.User;
 import com.imagegrafia.androidbasic.service.AppConstant;
 import com.imagegrafia.androidbasic.service.AuthService;
+import com.imagegrafia.androidbasic.utility.LoadingDialog;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -27,14 +28,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SignupActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
-
+    private LoadingDialog loadingDialog;
     TextView txtViewSignupErrMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
+        loadingDialog = new LoadingDialog(SignupActivity.this);
 
         EditText editTextSignupUsername = findViewById(R.id.editTextSignupUsername);
         EditText editTextSignupEmail = findViewById(R.id.editTextSignupEmail);
@@ -42,8 +43,11 @@ public class SignupActivity extends AppCompatActivity {
         txtViewSignupErrMessage = findViewById(R.id.txtViewSignupErrMessage);
         findViewById(R.id.imageViewSignUp);
         Button btnSignup = findViewById(R.id.btnSignup);
-        btnSignup.setOnClickListener(v -> signupUser(editTextSignupUsername.getText().toString(),
-                editTextSignupEmail.getText().toString(), editTextSignupPassword.getText().toString()));
+        btnSignup.setOnClickListener(v -> {signupUser(editTextSignupUsername.getText().toString(),
+                editTextSignupEmail.getText().toString(), editTextSignupPassword.getText().toString());
+            SignupActivity.this.loadingDialog.loadProgressBar();
+
+        });
 
         Button btnLoginPage = findViewById(R.id.btnLoginPage);
         btnLoginPage.setOnClickListener(v ->{
@@ -79,10 +83,13 @@ public class SignupActivity extends AppCompatActivity {
                     SignupActivity.this.txtViewSignupErrMessage.setText("Invalid signup details");
                     Toast.makeText(SignupActivity.this, "Signup Failed", Toast.LENGTH_LONG).show();
                 }
+                SignupActivity.this.loadingDialog.dismissProgressBar();
+
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
+                SignupActivity.this.loadingDialog.dismissProgressBar();
                 Toast.makeText(SignupActivity.this, "Failed fetching record", Toast.LENGTH_LONG).show();
             }
         });

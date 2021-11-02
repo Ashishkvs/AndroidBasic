@@ -18,7 +18,7 @@ public class LoadingDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         LayoutInflater layoutInflater = mActivity.getLayoutInflater();
         builder.setView(layoutInflater.inflate(R.layout.loading_dialog, null));
-        builder.setCancelable(true);
+        builder.setCancelable(false); // to listen outside event /click
 
         mAlertDialog = builder.create();
         mAlertDialog.show();
