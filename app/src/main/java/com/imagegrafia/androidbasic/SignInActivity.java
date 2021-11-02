@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.imagegrafia.androidbasic.api.LoginApiService;
 import com.imagegrafia.androidbasic.api.User;
 import com.imagegrafia.androidbasic.service.AppConstant;
+import com.imagegrafia.androidbasic.utility.LoadingDialog;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -28,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SignInActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
-
+    LoadingDialog loadingDialog;
     TextView txtViewErrMessage;
 
     SharedPreferences sharedPreferences;
@@ -37,13 +38,16 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
+        loadingDialog = new LoadingDialog(SignInActivity.this);
         EditText editTextEmailAddress = findViewById(R.id.editTextEmailAddress);
         EditText editTextPassword = findViewById(R.id.editTextPassword);
         txtViewErrMessage = findViewById(R.id.txtViewErrMessage);
         findViewById(R.id.imageView3);
         Button btnSignIn = findViewById(R.id.btnSignIn);
-        btnSignIn.setOnClickListener(v -> signInUser(editTextEmailAddress.getText().toString(), editTextPassword.getText().toString()));
+        btnSignIn.setOnClickListener(v -> {
+            loadingDialog.loadProgressBar();
+            signInUser(editTextEmailAddress.getText().toString(), editTextPassword.getText().toString());
+        });
         Button btnSignupPage = findViewById(R.id.btnSignupPage);
         btnSignupPage.setOnClickListener(v -> {
             Intent signInIntent = new Intent(SignInActivity.this, SignupActivity.class);
@@ -83,8 +87,10 @@ public class SignInActivity extends AppCompatActivity {
                     SharedPreferences.Editor spEditor = sharedPreferences.edit();
                     spEditor.putString(AppConstant.AUTHORIZATION, auth);
                     spEditor.commit();
+                    SignInActivity.this.loadingDialog.dismissProgressBar();
 
                 } else {
+                    SignInActivity.this.loadingDialog.dismissProgressBar();
                     Log.e(TAG, response.toString());
                     SignInActivity.this.txtViewErrMessage.setText("Invalid Login Details");
                     Toast.makeText(SignInActivity.this, "Logged In Failed", Toast.LENGTH_LONG).show();
