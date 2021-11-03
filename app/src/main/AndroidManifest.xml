@@ -14,14 +14,17 @@
         android:theme="@style/Theme.AndroidBasic"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+        <activity
             android:name=".VerificationActivity"
             android:exported="true" />
         <activity
             android:name=".SignInActivity"
-            android:theme="@style/Theme.AndroidBasic.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AndroidBasic.NoActionBar" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".RazorPaymentActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,8 +42,8 @@
         <activity
             android:name=".TestingRestApi"
             android:exported="false"
-            android:theme="@style/Theme.AndroidBasic.NoActionBar"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.AndroidBasic.NoActionBar" />
     </application>
 
 </manifest>
